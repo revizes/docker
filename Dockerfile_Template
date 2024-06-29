@@ -1,0 +1,39 @@
+FROM            ubuntu:22.04
+MAINTAINER      user (user@email.com)
+
+ENV             TZ=Asia/Seoul
+
+
+RUN     apt update
+RUN     apt upgrade -y
+RUN     apt install -y  autoconf \
+        automake \
+        bc \
+        bison \
+        flex \
+        build-essential \
+        cscope \
+        curl \
+        wget \
+        device-tree-compiler \
+        netcat \
+        python3 \
+        python3-pip \
+        python-is-python3 \
+        libssl-dev \
+        vim \
+        gdb \
+        sudo \
+        libffi-dev \
+        git
+
+RUN useradd --shell /bin/bash -u 1000 -G adm,sudo  -c "" -m user
+RUN echo 'user:passwd' | chpasswd
+
+RUN     apt install -y  locales
+RUN     locale-gen ko_KR en_US en_US.UTF-8 ko_KR.UTF-8 && \
+        update-locale LC_ALL=ko_KR.UTF-8 LANG=ko_KR.UTF-8
+ENV     LANG=ko_KR.UTF-8
+
+USER    user
+WORKDIR /home/user
